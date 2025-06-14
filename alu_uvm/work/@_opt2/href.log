@@ -1,0 +1,13 @@
+BEGIN 3:alu_if:fast__2:work
+    result :  1:alu_top:fast:work
+    a :  1:alu_top:fast:work
+    op_code :  1:alu_top:fast:work
+    b :  1:alu_top:fast:work
+END 
+BEGIN 3:alu_if:fast__1:work
+    a :  1:alu_pkg:fast:work
+    clk :  1:alu_pkg:fast:work
+    b :  1:alu_pkg:fast:work
+    op_code :  1:alu_pkg:fast:work
+    result :  1:alu_pkg:fast:work
+END 

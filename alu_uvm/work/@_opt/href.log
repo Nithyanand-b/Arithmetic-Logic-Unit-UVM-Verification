@@ -1,0 +1,17 @@
+BEGIN 3:alu_interface:fast__1:work
+    flagz :  1:alu_top_sv_unit:fast:work
+    operand_1 :  1:alu_top_sv_unit:fast:work
+    result :  1:alu_top_sv_unit:fast:work
+    operand_2 :  1:alu_top_sv_unit:fast:work
+    clk :  1:alu_top_sv_unit:fast:work
+    flagc :  1:alu_top_sv_unit:fast:work
+    opcode :  1:alu_top_sv_unit:fast:work
+END 
+BEGIN 3:alu_interface:fast__2:work
+    flagz :  1:alu_top:fast:work
+    opcode :  1:alu_top:fast:work
+    operand_2 :  1:alu_top:fast:work
+    flagc :  1:alu_top:fast:work
+    operand_1 :  1:alu_top:fast:work
+    result :  1:alu_top:fast:work
+END 
