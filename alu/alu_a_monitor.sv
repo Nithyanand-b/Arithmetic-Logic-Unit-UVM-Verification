@@ -25,9 +25,11 @@ function void alu_a_monitor::build_phase(uvm_phase phase);
                  super.build_phase(phase);                 
                  req = alu_sequence_item::type_id::create("req", this);
                  put_port = new("put_port", this);
+
 endfunction : build_phase
 
 function void alu_a_monitor::connect_phase(uvm_phase phase);
+
                  super.connect_phase(phase);
                  if(!(uvm_config_db #(virtual alu_if)::get(null, "*", "vif", vif))) 
                            
@@ -36,22 +38,28 @@ function void alu_a_monitor::connect_phase(uvm_phase phase);
 endfunction : connect_phase
 
 task alu_a_monitor::run_phase(uvm_phase phase);
-               
-                 forever begin
-                  
-                     @(posedge vif.clk);
-                        
-                        req.a = vif.a;
-                        req.b = vif.b;
-                        req.op_code = operation'(vif.op_code);
 
-                        #20; 
-     
-                        req.result = vif.result;
-                        put_port.put(req);
+  forever begin
+    @(posedge vif.clk);
 
-                 end
+    // Wait until inputs are valid (avoid sampling x on first cycle)
+    if (^vif.a === 1'bx || ^vif.b === 1'bx || ^vif.op_code === 1'bx)
+      continue;
 
-endtask : run_phase
+    req.a = vif.a;
+    req.b = vif.b;
+    req.op_code = operation'(vif.op_code);
+
+    #20;
+    req.result = vif.result;
+
+    `uvm_info("MON", $sformatf("a=%0d, b=%0d, op=%s, result=%0d",
+                req.a, req.b, req.op_code.name(), req.result), UVM_MEDIUM)
+
+    put_port.put(req);
+  end
+endtask
+
+
 
 

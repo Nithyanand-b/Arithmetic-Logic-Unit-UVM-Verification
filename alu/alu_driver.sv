@@ -1,4 +1,5 @@
 class alu_driver extends uvm_driver #(alu_sequence_item);
+
                  `uvm_component_utils(alu_driver)
                
                  virtual alu_if vif;
@@ -8,6 +9,7 @@ class alu_driver extends uvm_driver #(alu_sequence_item);
                  extern function void connect_phase(uvm_phase phase);
                  extern task run_phase(uvm_phase phase);
                  extern function void put_data();
+
 endclass : alu_driver
 
 function alu_driver::new(string name = "alu_driver", uvm_component parent = null);
@@ -26,12 +28,17 @@ endfunction
 task alu_driver::run_phase(uvm_phase phase);
 
                  phase.raise_objection(this);
+
                  repeat (10) begin
                    @(posedge vif.clk);
+                   
                    seq_item_port.get_next_item(req);
+
                    put_data();
+
                    seq_item_port.item_done();
                  end
+
                  phase.drop_objection(this);
 
 endtask

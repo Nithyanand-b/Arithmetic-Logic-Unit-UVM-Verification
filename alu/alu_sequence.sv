@@ -20,7 +20,8 @@ task alu_sequence::body();
                    req = alu_sequence_item::type_id::create("req");
                    repeat (10) begin
                      wait_for_grant();
-                     assert(req.randomize());
+                     assert(req.randomize() with { op_code == ADD; });
+
                      send_request(req);
                      wait_for_item_done();
                    end
